@@ -62,8 +62,13 @@ Musik_play=threading.Thread(target=Mus)
 Musik_play.start()
 
 # Головне вікно
+
 root = Tk()
-root.geometry("500x308")
+ekran_w=root.winfo_screenwidth()
+ekran_h=root.winfo_screenheight()
+ekran_w=int(ekran_w)
+ekran_h=int(ekran_h)
+root.geometry(f"500x308+{(ekran_w-500)//2}+{(ekran_h-308)//2}")
 root.resizable()
 OREL1=PhotoImage(file="Orel1.gif")
 OR=Image.open("Orel.png")
@@ -180,7 +185,7 @@ def sound_up1(a):
 
 
 wind_sound=Toplevel(root,bg="#660000")
-wind_sound.geometry("500x200")
+wind_sound.geometry(f"500x200+{(ekran_w-500)//2}+{(ekran_h-200)//2}")
 l01=Label(wind_sound,text="Музика",bg="#660000", font=("Arial", 20))
 l02=Label(wind_sound,text="Звуки гри",bg="#660000", font=("Arial", 20) )
 sound00=Label(wind_sound,image=Sound_image,bg="#660000")
@@ -198,7 +203,7 @@ scrol1.place(x=270,y=140)
 scrol1.set(50)
 scrol.place(x=270,y=100)
 windov=Toplevel(root)
-windov.geometry("500x500")
+windov.geometry(f"500x500+{(ekran_w-500)//2}+{(ekran_h-500)//2}")
 a=1
 l10=Label(windov, text="", font=("Arial", 20), image=Правила)
 l10.place(x=0,y=0)
@@ -274,7 +279,7 @@ instruc=Button(root,text=" ? ", font=("Arial", 10,),activebackground="#660000",b
 instruc.place(x=473,y=0)
 
 root1 = Toplevel(root)  # Створюємо нове вікно
-root1.geometry("1245x775")
+root1.geometry(f"1245x775+{(ekran_w-1245)//2}+10")
 root1.withdraw()
 root1.iconbitmap("icon.ico")
 root1.config(bg="#660000")
@@ -2310,7 +2315,7 @@ def почати():
     root1.deiconify()
     root.withdraw()
     
-    
+
 root.iconbitmap("icon.ico")
 root.title("Антична баталія")
 root1.title("Антична баталія")

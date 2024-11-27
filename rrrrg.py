@@ -1,7 +1,8 @@
+
 from tkinter import *
 from PIL import Image,ImageTk
 import pygame
-
+Stop=False
 import threading
 import random
 pygame.init()
@@ -50,11 +51,17 @@ Romb=None
 
 
 def Mus():
+    
+    global Stop
     while True:
         
-       if not Mus1_play.get_busy():
+        if Stop:
+            Mus1_play.stop()
+            break
+        else:
+            if not Mus1_play.get_busy():
                Mus1_play.play(Mus1) 
-       time.sleep(2)
+        time.sleep(2)
 
 
 
@@ -209,7 +216,7 @@ l10=Label(windov, text="", font=("Arial", 20), image=Правила)
 l10.place(x=0,y=0)
 Назад=Button(windov, text="<Назад", font=("Arial", 20,),command=lambda:гортання(1),activebackground="#660000",bg="#660000")
 Далі=Button(windov, text=" Далі>", font=("Arial", 20,),command=lambda:гортання(2),activebackground="#660000",bg="#660000")
-Назад.place(x=120,y=440)
+Назад.place(x=-10120,y=440)
 Далі.place(x=250,y=440)
 windov.withdraw()
 wind_sound.withdraw()
@@ -233,6 +240,13 @@ def гортання(ц):
         l10.config(image=Слони)
     elif a==5:
         l10.config(image=Лучники)
+    if a==1:
+        Назад.place(x=-1000)
+    elif a==5:
+        Далі.place(x=-1000)
+    else:
+        Назад.place(x=120,y=440)
+        Далі.place(x=250,y=440)
 iad=1
 def Sound_windov(w):
     global Paysa
@@ -358,7 +372,37 @@ def вибор(w):
          b5.config(bg="green")
          a=4
 def close():
-        root.destroy()
+    global Stop
+    Stop=True
+    
+    global  Slon_sound
+    global Slon_sound_1
+    global Stril_sound
+    global Stril_sound_1
+    Stril_play.stop()
+    Stril_sound=0
+    Stril_sound_1=0
+    Stril_play.stop()
+    Stril_sound=0
+    Stril_sound_1=0
+    global  Knife_sound
+    global Knife_sound_1
+    global  Kin_sound
+    global Kin_sound_1
+    
+    Kin_play.stop()
+    Kin_sound=0
+    Kin_sound_1=0
+    Knife_play.stop()
+    Knife_sound=0
+    Knife_sound_1=0
+    global  Rux_sound
+    global Rux_sound_1
+    
+    Rux_play.stop()
+    Rux_sound=0
+    Rux_sound_1=0
+    root.destroy()
 def close2():
     global  Slon_sound
     global Slon_sound_1
@@ -397,7 +441,7 @@ def close2():
     global L
     root1.withdraw()
     root.deiconify()
-    
+    Paysa=3
     L=[[0 for _ in range(15)] for _ in range(26)] 
     A = [[0 for _ in range(15)] for _ in range(26)]  # Створюємо масив A
     B = [[0 for _ in range(15)] for _ in range(26)]
@@ -518,8 +562,9 @@ def run(e):
     global Rux_sound_1
     global Kin_sound
     global Kin_sound_1
+    global Peremoga
     while True:
-        try:
+        
             if Paysa==0:
                 twogo(0)
             
@@ -542,6 +587,7 @@ def run(e):
                 Stril_play.stop()
                 Stril_sound=0
                 Stril_sound_1=0
+                Peremoga=0
                 break
             
             elif Paysa==1:
@@ -811,8 +857,7 @@ def run(e):
             LUK11=[]     
             LUK13=[]
             LUK14=[]
-        except:
-            break
+        
             
             
             
@@ -1572,7 +1617,7 @@ def twogo(t):
                                 except:
                                     d1=d1   
                             
-                                if Y+3<=15:
+                                if y+3<=15:
                                     if  (A[x][y+3]!=0 and A[x][y+3]!=10  and C[x][y+3]==1):
                                         
                                         d1=0
@@ -1582,23 +1627,31 @@ def twogo(t):
                                 d1=0
                             
                         except:
-                            d1=d1
+                            d1=0
+                        
                         if d1==0:
+                            
                             rux3(x,y)
                             d1=d1
                         
                         else:
-                            Kin_sound=1
-                            PTR[x][y+2]=1
-                            AA[x][y+2]=A[x][y]
-                            BA[x][y+2]=B[x][y]
-                            CA[x][y+2]=C[x][y]
-                            PA[x][y+2]=P[x][y]
-                            A[x][y+2]=10
-                            A[x][y]=0
-                            B[x][y]=0
-                            P[x][y]=0
-                            C[x][y]=0
+                            try:
+                               
+                               Kin_sound=1
+                               PTR[x][y+2]=1
+                               AA[x][y+2]=A[x][y]
+                               BA[x][y+2]=B[x][y]
+                               CA[x][y+2]=C[x][y]
+                               PA[x][y+2]=P[x][y]
+                               A[x][y+2]=10
+                               A[x][y]=0
+                               B[x][y]=0
+                               P[x][y]=0
+                               C[x][y]=0
+                            except:
+                                if y+1<15:
+                                    rux3(x,y)
+                                
                     
                     elif C[x][y]==4 and A[x][y]==2 and x>0 and PTR[x][y]==0:
                         d2=1
@@ -2323,4 +2376,4 @@ windov.title('Антична баталія')
 button.config(command=почати)
 root.protocol("WM_DELETE_WINDOW",close)
 root1.protocol("WM_DELETE_WINDOW",close2)
-root.mainloop
+root.mainloop()
